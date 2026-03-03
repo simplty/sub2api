@@ -70,7 +70,6 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useAppStore } from '@/stores'
 import { useAuthStore } from '@/stores/auth'
-import { useAdminSettingsStore } from '@/stores/adminSettings'
 import AppLayout from '@/components/layout/AppLayout.vue'
 import Icon from '@/components/icons/Icon.vue'
 import { buildEmbeddedUrl, detectTheme } from '@/utils/embedded-url'
@@ -79,7 +78,6 @@ const { t } = useI18n()
 const route = useRoute()
 const appStore = useAppStore()
 const authStore = useAuthStore()
-const adminSettingsStore = useAdminSettingsStore()
 
 const loading = ref(false)
 const pageTheme = ref<'light' | 'dark'>('light')
@@ -88,15 +86,8 @@ let themeObserver: MutationObserver | null = null
 const menuItemId = computed(() => route.params.id as string)
 
 const menuItem = computed(() => {
-  const publicItems = appStore.cachedPublicSettings?.custom_menu_items ?? []
-  const adminItems = authStore.isAdmin ? (adminSettingsStore.customMenuItems ?? []) : []
-  const allItems = [...publicItems]
-  for (const item of adminItems) {
-    if (!allItems.some((existing) => existing.id === item.id)) {
-      allItems.push(item)
-    }
-  }
-  const found = allItems.find((item) => item.id === menuItemId.value) ?? null
+  const items = appStore.cachedPublicSettings?.custom_menu_items ?? []
+  const found = items.find((item) => item.id === menuItemId.value) ?? null
   if (found && found.visibility === 'admin' && !authStore.isAdmin) {
     return null
   }
@@ -131,20 +122,12 @@ onMounted(async () => {
     })
   }
 
-  const promises: Promise<unknown>[] = []
-  if (!appStore.publicSettingsLoaded) {
-    promises.push(appStore.fetchPublicSettings())
-  }
-  if (authStore.isAdmin) {
-    promises.push(adminSettingsStore.fetch())
-  }
-  if (promises.length > 0) {
-    loading.value = true
-    try {
-      await Promise.all(promises)
-    } finally {
-      loading.value = false
-    }
+  if (appStore.publicSettingsLoaded) return
+  loading.value = true
+  try {
+    await appStore.fetchPublicSettings()
+  } finally {
+    loading.value = false
   }
 })
 
