@@ -110,6 +110,65 @@ export default {
     }
   },
 
+  // Key Usage Query Page
+  keyUsage: {
+    title: 'API Key 用量查询',
+    subtitle: '输入您的 API Key 以查看实时消费金额与使用状态',
+    placeholder: 'sk-ant-mirror-xxxxxxxxxxxx',
+    query: '查询',
+    querying: '查询中...',
+    privacyNote: '您的 Key 仅在浏览器本地处理，不会被存储',
+    dateRange: '统计范围:',
+    dateRangeToday: '今日',
+    dateRange7d: '7 天',
+    dateRange30d: '30 天',
+    dateRangeCustom: '自定义',
+    apply: '应用',
+    used: '已使用',
+    detailInfo: '详细信息',
+    tokenStats: 'Token 统计',
+    modelStats: '模型用量统计',
+    // Table headers
+    model: '模型',
+    requests: '请求数',
+    inputTokens: '输入 Tokens',
+    outputTokens: '输出 Tokens',
+    totalTokens: '总 Tokens',
+    cost: '费用',
+    // Status
+    quotaMode: 'Key 限额模式',
+    walletBalance: '钱包余额',
+    // Ring card titles
+    totalQuota: '总额度',
+    limit5h: '5 小时限额',
+    limitDaily: '日限额',
+    limit7d: '7 天限额',
+    limitWeekly: '周限额',
+    limitMonthly: '月限额',
+    // Detail rows
+    remainingQuota: '剩余额度',
+    expiresAt: '过期时间',
+    todayExpires: '(今日到期)',
+    daysLeft: '({days} 天)',
+    usedQuota: '已用额度',
+    subscriptionType: '订阅类型',
+    subscriptionExpires: '订阅到期',
+    // Usage stat cells
+    todayRequests: '今日请求',
+    todayTokens: '今日 Tokens',
+    todayCost: '今日费用',
+    rpmTpm: 'RPM / TPM',
+    totalRequests: '累计请求',
+    totalTokensLabel: '累计 Tokens',
+    totalCost: '累计费用',
+    avgDuration: '平均耗时',
+    // Messages
+    enterApiKey: '请输入 API Key',
+    querySuccess: '查询成功',
+    queryFailed: '查询失败',
+    queryFailedRetry: '查询失败，请稍后重试',
+  },
+
   // Setup Wizard
   setup: {
     title: 'Sub2API 安装向导',
@@ -1935,9 +1994,12 @@ export default {
         wsMode: 'WS mode',
         wsModeDesc: '仅对当前 OpenAI 账号类型生效。',
         wsModeOff: '关闭（off）',
+        wsModeCtxPool: '上下文池（ctx_pool）',
+        wsModePassthrough: '透传（passthrough）',
         wsModeShared: '共享（shared）',
         wsModeDedicated: '独享（dedicated）',
         wsModeConcurrencyHint: '启用 WS mode 后，该账号并发数将作为该账号 WS 连接池上限。',
+        wsModePassthroughHint: 'passthrough 模式不使用 WS 连接池。',
         oauthResponsesWebsocketsV2: 'OAuth WebSocket Mode',
         oauthResponsesWebsocketsV2Desc:
           '仅对 OpenAI OAuth 生效。开启后该账号才允许使用 OpenAI WebSocket Mode 协议。',
